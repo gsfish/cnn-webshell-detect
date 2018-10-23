@@ -1,0 +1,8 @@
+pymysql
+flask
+h5py
+numpy
+scipy
+scikit-learn
+#tensorflow
+tflearn
