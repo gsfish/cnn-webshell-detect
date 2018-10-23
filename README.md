@@ -1,4 +1,4 @@
-# 基于 CNN 的 Webshell 检测平台
+# CNN Webshell 平台
 
 ## 安装
 
@@ -40,7 +40,7 @@ mysql -u<username> -p<password> < init.sql
 ./test_model_metric_rnn.py
 ```
 
-运行检测页面：
+运行检测 Demo：
 
 ```
 ./server.py
