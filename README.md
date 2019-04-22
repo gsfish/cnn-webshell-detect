@@ -10,7 +10,14 @@
 pip install -r requirements
 ```
 
-初始化数据库（可选，用于 Demo）：
+初始化数据集：
+
+```
+git submodule init
+git submodule update
+```
+
+初始化数据库（用于 Demo，可选）：
 
 ```
 mysql -u<username> -p<password> < schema.sql
