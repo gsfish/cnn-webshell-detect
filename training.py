@@ -206,8 +206,9 @@ def get_model():
     print('[+] {0} white files loaded'.format(len(white_code_list)))
 
     print('[*] training model...')
-    model = train_model(black_code_list, black_label,
-                        white_code_list, white_label)
+    model = train_model(
+        black_code_list, black_label,
+        white_code_list, white_label)
     print('[+] training complete')
     return model
 

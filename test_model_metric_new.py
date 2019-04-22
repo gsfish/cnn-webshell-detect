@@ -25,11 +25,12 @@ def test_model(x1_code, y1_label, x2_code, y2_label):
     x1_code.extend(x2_code)
     y1_label.extend(y2_label)
 
-    print('serializing opcode from data set')
+    print('serializing opcodes')
     training.serialize_codes(x1_code)
 
     x_train, x_test, y_train, y_test = model_selection.train_test_split(x1_code, y1_label, shuffle=True)
-    print('train: {0}, test: {1}'.format(len(x_train), len(x_test)))
+    print('trainning set size: {0}'.format(len(x_train)))
+    print('testing set size: {0}'.format(len(x_test)))
 
     record = json.load(open(model_record, 'r'))
     seq_length = len(reduce(lambda x, y: x if len(x) > len(y) else y, x1_code))
@@ -48,7 +49,8 @@ def test_model(x1_code, y1_label, x2_code, y2_label):
         seq_length,
         optimizer=optimizer,
         learning_rate=learning_rate,
-        loss=loss)
+        loss=loss
+    )
     model = tflearn.DNN(network, tensorboard_verbose=0)
     model.fit(
         x_train, y_train,

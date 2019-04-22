@@ -27,9 +27,9 @@ def test_model(x1_code, y1_label, x2_code, y2_label):
     y1_label.extend(y2_label)
 
     x_test, y_test = shuffle(x1_code, y1_label)
-    print('size of testing set: {0}'.format(len(x_test)))
+    print('testing set size: {0}'.format(len(x_test)))
 
-    print('serializing opcode from testing set')
+    print('serializing opcodes...')
     training.serialize_codes(x_test)
 
     record = json.load(open(model_record, 'r'))
@@ -41,7 +41,11 @@ def test_model(x1_code, y1_label, x2_code, y2_label):
     x_test = tflearn.data_utils.pad_sequences(x_test, maxlen=seq_length, value=0.)
     y_test = tflearn.data_utils.to_categorical(y_test, nb_classes=2)
 
-    network = training.create_network(seq_length, optimizer=optimizer, learning_rate=learning_rate, loss=loss)
+    network = training.create_network(
+        seq_length, 
+        optimizer=optimizer, 
+        learning_rate=learning_rate, 
+        loss=loss)
     model = tflearn.DNN(network, tensorboard_verbose=0)
     model.load(model_path)
 

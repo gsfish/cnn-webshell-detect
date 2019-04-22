@@ -91,12 +91,12 @@ def test_model(x1_code, y1_label, x2_code, y2_label):
 
 
 if __name__ == '__main__':
-    print('Loading black files...')
+    print('loading black files...')
     black_code_list = training.get_all_opcode(black_files)
     black_label = [1] * len(black_code_list)
     print('{0} black files loaded'.format(len(black_code_list)))
 
-    print('Loading white files...')
+    print('loading white files...')
     white_code_list = training.get_all_opcode(white_files)
     white_label = [0] * len(white_code_list)
     print('{0} white files loaded'.format(len(white_code_list)))
