@@ -4,5 +4,5 @@ h5py
 numpy
 scipy
 scikit-learn
-#tensorflow
+tensorflow
 tflearn

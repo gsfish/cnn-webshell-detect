@@ -33,9 +33,9 @@ class Database():
         self.conn.close()
 
 
-    def create_result(self, fid, judge, chance):
-        sql = 'INSERT INTO result(fid, judge, chance, ctime) VALUES (%s, %s, %s, %s);'
-        parm = (fid, judge, chance, time.strftime("%Y-%m-%d %H:%M:%S"))
+    def create_result(self, file_id, malicious_judge, malicious_chance):
+        sql = 'INSERT INTO result(file_id, malicious_judge, malicious_chance, created_at) VALUES (%s, %s, %s, %s);'
+        parm = (file_id, malicious_judge, malicious_chance, time.strftime("%Y-%m-%d %H:%M:%S"))
         try:
             self.curs.execute(sql, parm)
         except Exception:
@@ -46,11 +46,11 @@ class Database():
             self.conn.commit()
 
 
-    def check_result(self, fid):
-        sql = 'SELECT judge, chance, ctime FROM result WHERE fid = %s;'
-        parm = (fid,)
+    def check_result(self, file_id):
+        sql = 'SELECT malicious_judge, malicious_chance, created_at FROM result WHERE file_id = %s;'
+        param = (file_id,)
         try:
-            self.curs.execute(sql, parm)
+            self.curs.execute(sql, param)
         except Exception:
             logging.exception('SQL: {0}'.format(sql))
             abort(500)

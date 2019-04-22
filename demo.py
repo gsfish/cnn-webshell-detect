@@ -1,16 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import atexit
-import hashlib
-import logging
 import os
 import time
+import json
+import logging
+import hashlib
+import atexit
 from configparser import ConfigParser
 
 import tflearn
-from flask import *
 from numpy import argmax
+from flask import Flask, request, redirect, render_template, url_for, abort
 
 import training
 from lib import Database
@@ -23,24 +24,26 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = config['api']['upload_path']
 app.config['MAX_CONTENT_LENGTH'] = int(config['api']['upload_max_length'])
 
-logging.basicConfig(level=logging.DEBUG, filename='server.log', filemode='w',
-                    format='%(asctime)s %(filename)s [line:%(lineno)d] %(levelname)s %(message)s')
+logging.basicConfig(
+    level=logging.DEBUG, filename='demo.log', filemode='w',
+    format='%(asctime)s %(filename)s [line:%(lineno)d] %(levelname)s %(message)s'
+)
 
 
 class TempFile():
 
     def __init__(self, path, name):
-        self.filepath = os.path.abspath(path)
-        self.filename = name
+        self.path = os.path.abspath(path)
+        self.name = name
 
-    def get_filename(self):
-        return self.filename
+    def get_name(self):
+        return self.name
 
-    def get_filepath(self):
-        return os.path.realpath(os.path.join(self.filepath, self.filename))
+    def get_path(self):
+        return os.path.realpath(os.path.join(self.path, self.name))
 
     def __del__(self):
-        # file = os.join(self.filepath, self.filename)
+        # file = os.join(self.path, self.name)
         # if os.path.isfile(file):
         #     os.remove(self.file)
         pass
@@ -50,7 +53,7 @@ def check_with_model(file_id):
     global model
 
     file = TempFile(os.path.join(app.config['UPLOAD_FOLDER']), file_id)
-    file_opcodes = [training.get_file_opcode(file.get_filepath())]
+    file_opcodes = [training.get_file_opcode(file.get_path())]
     training.serialize_codes(file_opcodes)
     file_opcodes = tflearn.data_utils.pad_sequences(file_opcodes, maxlen=seq_length, value=0.)
 
@@ -123,7 +126,7 @@ def index():
 
 @atexit.register
 def atexit():
-    logging.info('server stop')
+    logging.info('detection stopped')
 
 
 if __name__ == '__main__':
@@ -131,12 +134,11 @@ if __name__ == '__main__':
 
     host = config['server']['host']
     port = int(config['server']['port'])
-
     model_record = config['training']['model_record']
     seq_length = json.load(open(model_record, 'r'))['seq_length']
 
+    logging.info('loading model...')
     model = training.get_model()
-    logging.info('model loaded')
 
-    logging.info('server started')
-    app.run(host='0.0.0.0', debug=True)
+    logging.info('detection started')
+    app.run(host='0.0.0.0', port=port, debug=True)

@@ -1,8 +1,8 @@
-CREATE DATABASE IF NOT EXISTS eagleeye_cnn CHARACTER SET utf8;
+CREATE DATABASE IF NOT EXISTS detect CHARACTER SET utf8;
 
-USE eagleeye_cnn;
+USE detect;
 
-CREATE TABLE IF NOT EXISTS detect_result
+CREATE TABLE IF NOT EXISTS result
 (
   file_id VARCHAR(32) PRIMARY KEY,
   malicious_judge BOOLEAN NOT NULL,
