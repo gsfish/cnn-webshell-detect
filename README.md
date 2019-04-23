@@ -7,7 +7,7 @@
 安装依赖：
 
 ```
-pip install -r requirements
+pip install -r requirements.txt
 ```
 
 初始化数据集，黑/白样本分别位于 `dataset/{black,white}` 目录下：
