@@ -10,14 +10,14 @@
 pip install -r requirements
 ```
 
-初始化数据集：
+初始化数据集，黑/白样本分别位于 `dataset/{black,white}` 目录下：
 
 ```
 git submodule init
 git submodule update
 ```
 
-初始化数据库（用于 Demo，可选）：
+初始化数据库（可选，仅用于运行 Demo）：
 
 ```
 mysql -u<username> -p<password> < schema.sql
@@ -37,7 +37,7 @@ mysql -u<username> -p<password> < schema.sql
 ./demo.py
 ```
 
-测试已有模型（位于 `persistence` 下）：
+测试已有模型（位于 `persistence` 目录下）：
 
 ```
 ./test_model_metric_exist.py
