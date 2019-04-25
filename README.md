@@ -10,14 +10,14 @@
 pip install -r requirements.txt
 ```
 
-初始化数据集，黑/白样本分别位于 `dataset/{black,white}` 目录下：
+初始化数据集，黑白样本分别位于 `dataset/{black,white}` 目录下：
 
 ```
 git submodule init
 git submodule update
 ```
 
-初始化数据库（可选，仅用于运行 Demo）：
+初始化数据库（可选，用于运行 Web UI）：
 
 ```
 mysql -u<username> -p<password> < schema.sql
